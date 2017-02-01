@@ -16,7 +16,7 @@
 
 int sample = 50;
 pthread_mutex_t mutex;
-pthread_t t1, t2;
+pthread_t t1, t2, t3;
 
 void *handle_sample(void *arg) {
 
@@ -50,9 +50,11 @@ int main() {
 
 	pthread_create(&t1, NULL, (void *)handle_sample, (void *) "a");
 	pthread_create(&t2, NULL, (void *)handle_sample, (void *) "b");
+	pthread_create(&t3, NULL, (void *)handle_sample, (void *) "c");
 
 	pthread_join(t1, NULL);
 	pthread_join(t2, NULL);
+	pthread_join(t3, NULL);
 
 	return 0;
 }
