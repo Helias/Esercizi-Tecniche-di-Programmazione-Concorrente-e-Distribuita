@@ -2,9 +2,9 @@
 
 ### [Javascript](/Javascript)
 
-### [Esercizi Thread](/Esercizi Thread)
-### [Socket Java](/Esercizi sito prof.)
-### [Esampi Passati](/Esami Passati)
+### [Esercizi Thread](/Esercizi\ Thread)
+### [Socket Java](/Esercizi\ sito\ prof.)
+### [Esampi Passati](/Esami\ Passati)
 ### [Webservices](/Webservices-Servlet)
 
 --- 
