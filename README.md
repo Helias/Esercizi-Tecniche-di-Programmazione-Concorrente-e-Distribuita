@@ -2,9 +2,9 @@
 
 ### [Javascript](/Javascript)
 
-### [Esercizi Thread](/Esercizi\ Thread)
-### [Socket Java](/Esercizi\ sito\ prof.)
-### [Esampi Passati](/Esami\ Passati)
+### [Esercizi Thread](https://github.com/UNICT-DMI/Esercizi-TSDWL/tree/master/Esercizi%20Thread)
+### [Socket Java](https://github.com/UNICT-DMI/Esercizi-TSDWL/tree/master/Esercizi%20sito%20prof.)
+### [Esampi Passati](https://github.com/UNICT-DMI/Esercizi-TSDWL/tree/master/Esami%20Passati)
 ### [Webservices](/Webservices-Servlet)
 
 --- 
