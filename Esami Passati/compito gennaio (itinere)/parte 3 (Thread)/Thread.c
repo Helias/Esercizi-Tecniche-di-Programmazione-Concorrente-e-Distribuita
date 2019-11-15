@@ -58,7 +58,7 @@ int main()
 	pthread_mutex_init(&mutex, NULL);
 
 	pthread_create(&a, NULL, (void *)incr_pari, NULL);
-	pthread_create(&a, NULL, (void *)incr_dispari, NULL);
+	pthread_create(&b, NULL, (void *)incr_dispari, NULL);
 	
 	pthread_join(a, NULL);
 	pthread_join(b, NULL);

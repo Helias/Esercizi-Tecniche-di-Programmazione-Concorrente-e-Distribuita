@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form action="reverseServlet" method="get">
+            <h4>Inserisci una stringa</h4>
+            <input type="text" id="input" name="inputString">
+            <br><br>
+            <input type="button" OnClick="send()" value="Invia (ajax)">
+            &nbsp;&nbsp;<div id="demo"></div>
+            <br><br>
+            <input type="submit" value="Invia">
+        </form>
+        
+        <script>
+            function send() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                    var res = this.responseText.replace("Servlet reverseServlet at ", "Reverse: ");
+                    res = res.replace("<h1>", "");
+                    res = res.replace("</h1>", "");
+
+                    document.getElementById("demo").innerHTML = res;
+                  }
+                };
+                xhttp.open("GET", "reverseServlet?inputString=" + document.getElementById("input").value, true);
+                xhttp.send();
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,124 @@
+<!-- 
+Prova del 03-02-2017
+
+Implementare una pagina html che includa del codice javascript per realizzare le seguenti funzionalita':
+
+A) al caricamento della pagina, invia una richiesta HTTP GET asincrona all'indirizzo http://globus.dmi.unict.it/~fmessina/italia.json, e conserva i dati ricevuti in una variabile globale. Viceversa, in caso di errore, visualizza un messaggio di alert. Il file json contiene informazioni relative ai capoluoghi di regione ed alle sigle relative alle province corrispondenti. 
+
+B) Visualizza una tabella di due righe ed n colonne, dove n e' il numero di capoluoghi per una regione da selezionare in modo casuale (es: Molise). La prima riga conterra' i capoluoghi, la seconda riga le sigle delle corrispondenti province.
+
+NB: la singla contenuta nell'elemento i-esimo degli array "province" corrisponte al nome di capoluogo contenuto nell'elemento i-esimo degli array "capoluoghi".
+
+**FACOLTATIVO**
+C) A partire dai dati prelevati come descritto al punto A, visualizzare un menu a tendina in cui ogni elemento e' un nome di regione.
+
+D) Associare all'evento "onchange" del menu a tendina realizzato al punto B, la creazione di un secondo menu a tendina che contiene la lista dei capoluoghi. 
+
+E) Associare all'evento "onchange" del menu a tendina del punto D, la visualizzazione della corrispondente sigla provincia. 
+
+F) Modificare il codice relativo al punto B al fine di associare, in corrispondenza della sigla della provincia, una URL del tipo https://it.wikipedia.org/wiki/Provincia_Di_<prov>, dove <prov> e' il nome della provincia corrispondente al codice visualizzato. 
+
+Es: http://it.wikipedia.org/wiki/Provincia_Di_Gorizia
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+
+	<div id="content"></div>
+
+	<br>
+	<div id="first_select"></div>
+
+	<br>
+	<div id="second_select"></div>
+
+	<br>
+	<div id="desc"></div>
+
+	<script src="jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+
+		// A)
+		var data;
+    $.ajax({
+			url: "http://globus.dmi.unict.it/~fmessina/italia.json",
+			success: function(result) {
+				data = result;
+
+				// B)
+				var regionIndex = Math.round(Math.random() * data.length);
+				var regione = data[regionIndex];
+
+				var capoluoghi = "", province = "";
+				for (var i = 0; i < regione.capoluoghi.length; i++) {
+					capoluoghi 	+= "<td>" + regione.capoluoghi[i] + "</td>";
+					province 		+= "<td>" + regione.province[i] + "</td>";
+				}
+
+				var contentHTML = "<h2>" + regione.nome + "</h2>";
+				contentHTML += '<table border="1">';
+				contentHTML += "<tr>";
+				contentHTML += capoluoghi;
+				contentHTML += "</tr>";
+				contentHTML += "<tr>"
+				contentHTML += province;
+				contentHTML += "</tr>"
+				contentHTML += "</table>";
+
+				$("#content").html(contentHTML);
+
+
+				// C)
+				var regs = document.createElement("select");
+				var option = document.createElement("option");
+				option.text = "--";
+				regs.add(option);
+
+				for (var i = 0; i < data.length; i++) {
+					option = document.createElement("option");
+					option.text = data[i].nome;
+					option.value = i;
+					regs.add(option);
+				}
+				document.getElementById("first_select").appendChild(regs);
+
+				// D)
+				regs.onchange = function() {
+					document.getElementById("second_select").innerHTML = "";
+
+					var citta = document.createElement("select");
+					var option;
+
+					for (var i = 0; i < data[regs.value].capoluoghi.length; i++) {
+						option = document.createElement("option");
+						option.value = i;
+						option.text = data[regs.value].capoluoghi[i];
+						citta.add(option);
+					}
+					document.getElementById("second_select").appendChild(citta);
+
+					// E)
+					citta.onchange = function() {
+						var desc = document.getElementById("desc");
+						desc.innerHTML = data[regs.value].province[citta.value];
+
+						// F)
+						desc.innerHTML += ' <a href="http://it.wikipedia.org/wiki/Provincia_Di_' + data[regs.value].capoluoghi[citta.value] + '">http://it.wikipedia.org/wiki/Provincia_Di_' + data[regs.value].capoluoghi[citta.value] + '</a> ';
+					};
+
+				};
+
+			},
+			error: function() { alert("error!"); }
+    });
+
+	});
+
+	</script>
+	</body>
+</html>
+
